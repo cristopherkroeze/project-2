@@ -1,0 +1,24 @@
+{{#if userInSession}}
+  <h1>Username: {{ userInSession.username }}!</h1>
+  <h2>Email: {{ userInSession.email }}</h2>
+
+  <h2>
+    Watch List:
+    {{#each userInSession.watchList}}
+        {{>showPartial}}
+    {{/each}}
+  </h2>
+
+  <h2>
+    Favorites:
+    {{#each userInSession.favorites}}
+        {{>showPartial}}
+    {{/each}}
+  </h2>
+
+  <button>
+    <a href="/profile">Reload the page</a>
+  </button>
+{{else}}
+  <p>There is nobody logged in currently. Please log in.</p>
+{{/if}}

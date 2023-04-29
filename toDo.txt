@@ -1,0 +1,7 @@
+1. Go Through "Mongoose $ Express | update-delete documents" lesson
+2. Add appropriate and relevant areas to your project
+3. Add a "Watching" button that adds the anime to the user's watchList
+4. add a favorites button that adds the anime to the user's favorites
+5. style the website a little more
+6. create 5 shows in the database so the website starts out not empty
+7. in the "anime details" page, add a "rated and submitted by:" tag
