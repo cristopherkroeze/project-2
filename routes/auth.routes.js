@@ -4,18 +4,22 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 const mongoose = require('mongoose');
 const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
-
+const User = require("../models/User.model.js");
 
 router.get('/signup', isLoggedOut, (req, res) => res.render('auth/signup'));
 
 
 router.post('/signup', isLoggedOut, (req, res, next) => {
-   
+   console.log(req.body);
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
         res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
         return;
+      }
+
+      if (User.findOne({ email }) || User.findOne({ username })) {
+        res.render('auth/signup', { errorMessage: 'Username or Email is taken' });
       }
 
       const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
@@ -30,14 +34,17 @@ router.post('/signup', isLoggedOut, (req, res, next) => {
       .genSalt(saltRounds)
       .then(salt => bcryptjs.hash(password, salt))
       .then(hashedPassword => {
-        return User.create({
+          User.create({
           username,
           email,
-          passwordHash: hashedPassword
-        });
-      })
-      .then(userFromDB => {
-        res.redirect('/profile');
+          password: hashedPassword
+        })
+        .then(userFromDB => {
+          console.log("req.session:", req.session);
+          console.log("userFromDB:", userFromDB);
+          req.session.user = userFromDB;
+          res.redirect('/auth/users/profile');
+        })
       })
       .catch(error => {
         if (error instanceof mongoose.Error.ValidationError) {
@@ -72,8 +79,8 @@ router.post('/signup', isLoggedOut, (req, res, next) => {
         if (!user) {
           res.render('auth/login', { errorMessage: 'Email is not registered. Try with other email.' });
           return;
-        } else if (bcryptjs.compareSync(password, user.passwordHash)) {
-            req.session.currentUser = user;
+        } else if (bcryptjs.compareSync(password, user.password)) {
+            req.session.user = user;
             res.render('users/profile', { user });
         } else {
           res.render('auth/login', { errorMessage: 'Incorrect password.' });
@@ -91,7 +98,7 @@ router.post('/signup', isLoggedOut, (req, res, next) => {
   });
 
 
-  router.get('/profile', isLoggedIn, (req, res) => {
+  router.get('/users/profile', isLoggedIn, (req, res) => {
     res.render('users/profile', { userInSession: req.session.currentUser });
   });
 module.exports = router;

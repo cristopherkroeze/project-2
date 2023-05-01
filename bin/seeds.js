@@ -11,8 +11,8 @@ const shows = [
         name: "Death Note",
         genre: "Horror",
         rating: 10,
-        synopsis: "MC finds notebook that kills people"
-        //img: "" 
+        synopsis: "MC finds notebook that kills people",
+        img: "https://upload.wikimedia.org/wikipedia/en/7/72/Death_Note_Characters.jpg" 
     }
 
 ];
@@ -29,11 +29,6 @@ mongoose
     console.log(`Created ${showsFromDB.length} shows`);
 
     // Once the documents are created, close the DB connection
-    return mongoose.connection.close();
-  })
-  .then(() => {
-    // Once the DB connection is closed, print a message
-    console.log('DB connection closed!');
   })
   .catch(err => {
     console.log(`An error occurred while creating shows from the DB: ${err}`);

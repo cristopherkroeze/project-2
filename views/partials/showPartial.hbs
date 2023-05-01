@@ -6,4 +6,14 @@
     <p>{{rating}}</p>
     <p>{{synopsis}}</p>
     {{!-- <p>{{image}}</p>  --}}
+    <a href="/animes/{{_id}}/edit">Edit</a>
+    <form action="/animes/{{_id}}/delete" method="POST">
+      <button>Delete</button>
+    </form>
+    <form action="/animes/shows/watchList" method="POST">
+      <button>Add to Watch List</button>
+    </form>
+    <form action="/animes/shows/favorites" method="POST">
+      <button>Add to Favorites</button>
+    </form>
 </div>

@@ -15,7 +15,7 @@ const showSchema = new Schema(
         type: String
     },
     img: {
-        type: Image //does this work? is type: image a thing?
+        type: String 
     }
   },
 
