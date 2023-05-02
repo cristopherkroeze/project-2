@@ -18,9 +18,19 @@ router.post('/signup', isLoggedOut, (req, res, next) => {
         return;
       }
 
-      if (User.findOne({ email }) || User.findOne({ username })) {
-        res.render('auth/signup', { errorMessage: 'Username or Email is taken' });
-      }
+      User.findOne({email})
+      .then(user => 
+        {if (user) {
+          res.render('auth/signup', { errorMessage: 'Email is taken' });
+          return;
+        }});
+
+        User.findOne({username})
+        .then(user => 
+          {if (user) {
+            res.render('auth/signup', { errorMessage: 'Username is taken' });
+            return;
+          }});
 
       const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
       if (!regex.test(password)) {
@@ -81,7 +91,7 @@ router.post('/signup', isLoggedOut, (req, res, next) => {
           return;
         } else if (bcryptjs.compareSync(password, user.password)) {
             req.session.user = user;
-            res.render('users/profile', { user });
+            res.render('users/profile', { userInSession: user });
         } else {
           res.render('auth/login', { errorMessage: 'Incorrect password.' });
         }
@@ -99,6 +109,6 @@ router.post('/signup', isLoggedOut, (req, res, next) => {
 
 
   router.get('/users/profile', isLoggedIn, (req, res) => {
-    res.render('users/profile', { userInSession: req.session.currentUser });
+    res.render('users/profile', { userInSession: req.session.user });
   });
 module.exports = router;

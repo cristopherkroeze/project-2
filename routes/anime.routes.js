@@ -1,28 +1,41 @@
 const router = require('express').Router();
-router.get('/shows', (req, res) => res.render('animes/shows'));
+
+router.get('/shows', (req, res) => {
+              Show.find()
+                  .then(allShows => {
+                    res.render('animes/shows.hbs', {shows: allShows});
+                  })
+                  .catch(error => {
+                    console.log('Error while getting the animes from the DB: ', error);
+                    next(error);
+                  });
+       });
 
 const Show = require('../models/Show.model.js');
 
 
 
 router.post('/shows/watchList', (req, res, next) => {
-  let user = req.session.currentUser;
+  let user = req.session.user;
   const { showId } = req.params;
 
   Show.findById(showId)
       .then(theShow => {user.watchList.push(theShow)
         user.save()})
       .catch(error => next(error));
+
+    res.redirect("/auth/users/profile");
 })
 
 router.post('/shows/favorites', (req, res, next) => {
-  let user = req.session.currentUser;
+  let user = req.session.user;
   const { showId } = req.params;
 
   Show.findById(showId)
       .then(theShow => {user.favorites.push(theShow)
       user.save()})
       .catch(error => next(error));
+    res.redirect("/auth/users/profile");
 })
 
 
@@ -38,9 +51,9 @@ router.get('/:showId/edit', (req, res, next) => {
 
 router.post('/:showId/edit', (req, res, next) => {
   const { showId } = req.params;
-  const { name, genre, rating ,synopsis, image} = req.body;
+  const { name, genre, rating ,synopsis, img} = req.body;
  
-  Show.findByIdAndUpdate(showId, { name, genre, rating ,synopsis, image }, { new: true })
+  Show.findByIdAndUpdate(showId, { name, genre, rating ,synopsis, img }, { new: true })
     .then(updatedShow => res.redirect(`/animes/${updatedShow.id}`))
     .catch(error => next(error));
 });
@@ -56,15 +69,15 @@ router.post('/:showId/delete', (req, res, next) => {
 router.get('/anime-entry', (req, res) => res.render('animes/anime-entry.hbs'));
 
 router.post('/anime-entry', (req, res, next) => {
-    const { name, genre, rating ,synopsis, image} = req.body;
+    const { name, genre, rating ,synopsis, img} = req.body;
 
-    if (!name || !genre || !rating || !synopsis || !image) {
-        res.render('/animes/anime-entry', { errorMessage: 'All fields are mandatory. Please try again' });
+    if (!name || !genre || !rating || !synopsis || !img) {
+        res.render('/animes/anime-entry.hbs', { errorMessage: 'All fields are mandatory. Please try again' });
         return;
       }
 
-      Show.create({name, genre, rating, synopsis, image})
-            .then(res.redirect('/anime/shows'))
+      Show.create({name, genre, rating, synopsis, img})
+            .then(res.redirect('/animes/shows'))
             .catch(error => next(error));
   });
 

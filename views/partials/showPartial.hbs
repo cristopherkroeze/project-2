@@ -1,11 +1,10 @@
 <div class ="single-show">
-    {{!-- <img src="{{image_url}}" alt="image-of-show" style="width: 50px;"> --}}
+    <img src="{{img}}" alt="image-of-show" style="width: 50px;">
     <br>
-    <a href="/show/{{id}}">{{name}}</a>
+    <a href="/animes/{{id}}">{{name}}</a>
     <p>{{genre}}</p>
     <p>{{rating}}</p>
     <p>{{synopsis}}</p>
-    {{!-- <p>{{image}}</p>  --}}
     <a href="/animes/{{_id}}/edit">Edit</a>
     <form action="/animes/{{_id}}/delete" method="POST">
       <button>Delete</button>
