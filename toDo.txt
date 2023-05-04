@@ -1,7 +1,5 @@
-0. fix index.html by adding a "welcome to the anime watchlist website" and make the "get" method work in animes routes
-1. make sure all of the buttons at the top of the home page are working and that they work on every screen
-2. fix "add to watchlist" and "add to favorites"
-3. add a checker to make sure someone is logged in if they click add to watchlist or add to favorites so if you are logged out, it redirects you to the login page
+
+2. fix the user.save() part of add to watchlist, then update add to favorite to mimic add to watchlist
 4. make sure create anime entry works
 5. make sure the list of animes are displayed when you click "animes"
 6. style the website a little more

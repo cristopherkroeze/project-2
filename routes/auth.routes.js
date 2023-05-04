@@ -90,8 +90,9 @@ router.post('/signup', isLoggedOut, (req, res, next) => {
           res.render('auth/login', { errorMessage: 'Email is not registered. Try with other email.' });
           return;
         } else if (bcryptjs.compareSync(password, user.password)) {
+            console.log("user:", user)
             req.session.user = user;
-            res.render('users/profile', { userInSession: user });
+            res.redirect('/auth/users/profile');
         } else {
           res.render('auth/login', { errorMessage: 'Incorrect password.' });
         }

@@ -1,18 +1,25 @@
 <div class ="single-show">
     <img src="{{img}}" alt="image-of-show" style="width: 50px;">
     <br>
-    <a href="/animes/{{id}}">{{name}}</a>
-    <p>{{genre}}</p>
-    <p>{{rating}}</p>
-    <p>{{synopsis}}</p>
+    <a href="/animes/{{_id}}">Name: {{name}}</a>
+    <p>Genre: {{genre}}</p>
+    <p>Rating: {{rating}}</p>
+    <p>Synopsis: {{synopsis}}</p>
+    <p>Owner: {{owner.username}}</p>
     <a href="/animes/{{_id}}/edit">Edit</a>
     <form action="/animes/{{_id}}/delete" method="POST">
       <button>Delete</button>
     </form>
-    <form action="/animes/shows/watchList" method="POST">
+    <form action="/animes/shows/watchList/{{_id}}" method="POST">
       <button>Add to Watch List</button>
     </form>
-    <form action="/animes/shows/favorites" method="POST">
+    <form action="/animes/shows/favorites/{{_id}}" method="POST">
       <button>Add to Favorites</button>
+    </form>
+    <form action="/animes/shows/watchList/{{_id}}/remove" method="POST">
+      <button>Remove from Watch List</button>
+    </form>
+    <form action="/animes/shows/favorites/{{_id}}/remove" method="POST">
+      <button>Remove from Favorites</button>
     </form>
 </div>

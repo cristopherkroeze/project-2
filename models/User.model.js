@@ -21,11 +21,11 @@ const userSchema = new Schema(
       required: [true, 'Password is required.']
     },
     favorites: {
-      type: Array,
+      type: [{type: Schema.Types.ObjectId, ref: "Show"}],
       required: [false]
     },
     watchList: {
-      type: Array,
+      type: [{type: Schema.Types.ObjectId, ref: "Show"}],
       required: [false]
     }
   },

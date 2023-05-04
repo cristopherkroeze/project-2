@@ -1,14 +1,14 @@
 <div id="form">
   <h2>Edit an Anime Entry: {{show.name}}</h2>
  
-  <form action="/animes/{{_id}}/edit" method="POST">
+  <form action="/animes/{{show._id}}/edit" method="POST" enctype="multipart/form-data">
  
     <label> Name:
       <input type="text" name="name" value="{{show.name}}" />
     </label>
  
     <label> Genre:
-      <input type="text" name="genre" value = "{{show.genre}}" />
+      <input type="text" name="genre" value={{show.genre}} />
     </label>
 
     <label> Rating:
@@ -16,11 +16,11 @@
     </label>
  
     <label> Synopsis:
-      <textarea name="synopsis" cols="50" rows="20" value = "{{show.synopsis}}"></textarea>
+      <textarea name="synopsis" cols="50" rows="20" >{{show.synopsis}}</textarea>
     </label>
 
     <label for="img">Select an image:</label>
-    <input type="file" id="img" name="img" value = "show.img">
+    <input type="file" id="img" name="img" value={{show.img}}>
  
     <button type="submit">Save Changes</button>
  

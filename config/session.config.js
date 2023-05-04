@@ -13,7 +13,7 @@ const MongoStore = require('connect-mongo');
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             secure: process.env.NODE_ENV === 'production',
             httpOnly: true,
-            maxAge: 60000
+            maxAge: 600000
           },
           store: MongoStore.create({
             mongoUrl: process.env.MONGODB_URI || 'mongodb://0.0.0.0/project-2'

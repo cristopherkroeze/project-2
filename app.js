@@ -2,7 +2,7 @@ const express = require('express');
 const bodyparser = require("body-parser");
 const hbs = require('hbs');
 const path = require('path');
-let indexRouter = require("./config/index.js");
+let indexRoute = require("./routes/routes.js");
 let authRoutes = require("./routes/auth.routes.js")
 let animeRoutes = require("./routes/anime.routes.js")
 const seeds = require("./bin/seeds.js")
@@ -45,7 +45,7 @@ const MongoStore = require('connect-mongo');
 
 
 
-app.use("/", indexRouter);
+app.use("/", indexRoute);
 app.use("/auth", authRoutes)
 app.use("/animes", animeRoutes)
 // Register the location for handlebars partials here:
@@ -56,7 +56,7 @@ hbs.registerPartials(__dirname + "/views/partials");
 // Add the route handlers here:
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index.hbs');
 });
 
 app.listen(3000, () => console.log('🏃‍ on port 3000'));
