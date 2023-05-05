@@ -55,8 +55,4 @@ hbs.registerPartials(__dirname + "/views/partials");
 
 // Add the route handlers here:
 
-app.get('/', (req, res) => {
-  res.render('index.hbs');
-});
-
-app.listen(3000, () => console.log('🏃‍ on port 3000'));
+app.listen(process.env.PORT, () => console.log('🏃 on port' + process.env.PORT));
